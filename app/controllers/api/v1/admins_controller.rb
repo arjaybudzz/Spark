@@ -1,5 +1,6 @@
 class Api::V1::AdminsController < ApplicationController
   before_action :setup_admin, only: %i[show update destroy]
+  before_action :check_login, only: %i[update destroy]
 
   def index
     @admin = Admin.all

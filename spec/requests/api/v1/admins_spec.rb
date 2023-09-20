@@ -46,30 +46,56 @@ RSpec.describe 'Api::V1::Admins', type: :request do
   end
 
   describe 'PUT /update' do
-    context 'update info if input is valid' do
+    context 'update info if input is valid and logged in' do
       before do
-        put api_v1_admin_url(@admin), params: { admin: @admin_valid_attribute }, as: :json
+        put api_v1_admin_url(@admin), params: { admin: @admin_valid_attribute },
+          headers: { Authorization: JsonWebToken.encode(admin_id: @admin.id) },
+          as: :json
       end
 
       it { expect(response).to have_http_status(:success) }
     end
 
-    context 'do not update if input is invalid' do
+    context 'do not update if input is invalid but logged in' do
       before do
         put api_v1_admin_url(@admin),
+          headers: { Authorization: JsonWebToken.encode(admin_id: @admin.id) },
           params: { admin: @admin_invalid_attribute },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+
+    context 'forbid to update if not logged in' do
+      before do
+        put api_v1_admin_url(@admin),
+          params: { admin: @admin_valid_attribute },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
   end
 
   describe 'DELETE /destroy' do
-    before do
-      delete api_v1_admin_url(@admin), as: :json
+    context 'destroy admin if logged in' do
+      before do
+        delete api_v1_admin_url(@admin),
+          headers: { Authorization: JsonWebToken.encode(admin_id: @admin.id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:no_content) }
     end
 
-    it { expect(response).to have_http_status(:no_content) }
+    context 'forbid to destroy admin if not logged in' do
+      before do
+        delete api_v1_admin_url(@admin), as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+
   end
 end

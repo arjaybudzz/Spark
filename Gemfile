@@ -50,3 +50,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "jwt", "~> 2.7"
