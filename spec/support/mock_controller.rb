@@ -1,5 +1,6 @@
 class MockController
   include Authenticable
+  include SubjectAuthentication
   attr_accessor :request
 
   def initialize

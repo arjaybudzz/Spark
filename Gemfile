@@ -52,3 +52,5 @@ end
 
 
 gem "jwt", "~> 2.7"
+
+gem 'simplecov', require: false, group: :test
