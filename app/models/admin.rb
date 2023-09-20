@@ -1,6 +1,8 @@
 class Admin < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
+  has_many :subjects, dependent: :destroy
+
   validates :first_name, presence: true, length: { minimum: 2, maximum: 30 }
   validates :middle_name, length: { minimum: 2, maximum: 30 }
   validates :last_name, presence: true, length: { minimum: 2, maximum: 30 }

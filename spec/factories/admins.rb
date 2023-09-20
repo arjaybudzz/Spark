@@ -21,6 +21,18 @@ FactoryBot.define do
       password_confirmation { 'password' }
     end
 
+    factory :admin_with_subjects do
+      transient do
+        subjects_count { 10 }
+      end
+
+      after(:create) do |admin, evaluator|
+        create_list(:subject, evaluator.subjects_count, admin: admin)
+
+        admin.reload
+      end
+    end
+
     trait :valid do
       email { 'johndoe@gmail.com' }
       password { 'password' }
