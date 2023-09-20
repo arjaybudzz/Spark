@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_20_033952) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_20_113829) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,7 +31,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_033952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_subjects_on_admin_id"
+    t.index ["name"], name: "index_subjects_on_name", unique: true
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+    t.text "discussion"
+    t.bigint "subject_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
+    t.index ["subject_id"], name: "index_topics_on_subject_id"
   end
 
   add_foreign_key "subjects", "admins"
+  add_foreign_key "topics", "subjects"
 end

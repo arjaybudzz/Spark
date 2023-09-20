@@ -3,7 +3,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     middle_name { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
-    email { Faker::Internet.unique.email(domain: 'gmail.com') }
+    email { "#{first_name}@foo.com" }
     password { 'password' }
     password_confirmation { 'password' }
 
