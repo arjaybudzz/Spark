@@ -3,4 +3,5 @@ class ApplicationController < ActionController::API
   include SubjectAuthentication
   include TopicAuthentication
   include QuizAuthentication
+  include QuizItemAuthentication
 end

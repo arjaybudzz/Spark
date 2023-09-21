@@ -6,18 +6,18 @@ class Api::V1::QuizItemsController < ApplicationController
   def index
     @quiz_item = QuizItem.all
 
-    render json: @quiz_item
+    render json: QuizItemSerializer.new(@quiz_item).serializable_hash
   end
 
   def show
-    render json: @quiz_item
+    render json: QuizItemSerializer.new(@quiz_item).serializable_hash
   end
 
   def create
     @quiz_item = current_quiz.quiz_items.build(permitted_quiz_item_params)
 
     if @quiz_item.save
-      render json: @quiz_item, status: :created
+      render json: QuizItemSerializer.new(@quiz_item).serializable_hash, status: :created
     else
       render json: @quiz_item.errors, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Api::V1::QuizItemsController < ApplicationController
 
   def update
     if @quiz_item.update(permitted_quiz_item_params)
-      render json: @quiz_item, status: :ok
+      render json: QuizItemSerializer.new(@quiz_item).serializable_hash, status: :ok
     else
       render json: @quiz_item.errors, status: :unprocessable_entity
     end

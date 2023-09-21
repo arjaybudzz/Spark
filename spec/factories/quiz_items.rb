@@ -9,6 +9,11 @@ FactoryBot.define do
       problem { nil }
     end
 
+    trait :wrong do
+      problem { 'x + y = 6' }
+    end
+
     factory :empty_quiz_problem, traits: [:invalid]
+    factory :wrong_problem, traits: [:wrong]
   end
 end
