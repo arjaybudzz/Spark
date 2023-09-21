@@ -3,6 +3,15 @@ require 'rails_helper'
 RSpec.describe Topic, type: :model do
   describe 'associations test' do
     it { should belong_to(:subject) }
+    it { should have_many(:quizzes).dependent(:destroy) }
+
+    context 'destroyed topic should destroy linked quizzes' do
+      let(:sample_topic) { create(:topic_with_quizzes) }
+
+      before { sample_topic.destroy }
+
+      it { expect(Quiz.count).to eq(0) }
+    end
   end
 
   describe 'topic name validation' do

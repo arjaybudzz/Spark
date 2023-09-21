@@ -9,4 +9,10 @@ module TopicAuthentication
 
     @current_topic = Topic.find(decoded[:topic_id]) rescue ActiveRecord::RecordNotFound
   end
+
+  protected
+
+  def check_existing_topic
+    head :forbidden unless current_topic
+  end
 end

@@ -22,6 +22,17 @@ FactoryBot.define do
       name { 'Quadratic Equations' }
     end
 
+    factory :topic_with_quizzes do
+      transient do
+        quizzes_count { 5 }
+      end
+
+      after(:create) do |topic, evaluator|
+        create_list(:quiz, evaluator.quizzes_count, topic: topic)
+        topic.reload
+      end
+    end
+
     factory :linear_equation_topic, traits: [:valid]
     factory :quadratic_equation_topic, traits: [:other_name]
     factory :empty_topic_name, traits: [:invalid]

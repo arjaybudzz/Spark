@@ -2,6 +2,7 @@ class MockController
   include Authenticable
   include SubjectAuthentication
   include TopicAuthentication
+  include QuizAuthentication
   attr_accessor :request
 
   def initialize

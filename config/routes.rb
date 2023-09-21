@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :subject_tokens, only: %i[create]
       resources :topics, only: %i[index show create update destroy]
       resources :topic_tokens, only: %i[create]
+      resources :quizzes, only: %i[index show create update destroy]
     end
   end
 end
