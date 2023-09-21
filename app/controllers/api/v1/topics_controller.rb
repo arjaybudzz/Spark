@@ -5,18 +5,18 @@ class Api::V1::TopicsController < ApplicationController
 
   def index
     @topic = Topic.all
-    render json: @topic
+    render json: TopicSerializer.new(@topic).serializable_hash
   end
 
   def show
-    render json: @topic
+    render json: TopicSerializer.new(@topic).serializable_hash
   end
 
   def create
     @topic = current_subject.topics.build(permitted_topic_params)
 
     if @topic.save
-      render json: @topic, status: :created
+      render json: TopicSerializer.new(@topic).serializable_hash, status: :created
     else
       render json: @topic.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class Api::V1::TopicsController < ApplicationController
 
   def update
     if @topic.update(permitted_topic_params)
-      render json: @topic, status: :ok
+      render json: TopicSerializer.new(@topic).serializable_hash, status: :ok
     else
       render json: @topic.errors, status: :unprocessable_entity
     end

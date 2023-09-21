@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       get api_v1_subjects_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) } # @subject object included
+    it { expect(json[:data].length).to eq(10) } # @subject object included
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       get api_v1_subject_url(@subject), as: :json
     end
 
-    it { expect(json['name']).to match(@subject.name) }
+    it { expect(json[:data][:attributes][:name]).to match(@subject.name) }
     it { expect(response).to have_http_status(:success) }
   end
 

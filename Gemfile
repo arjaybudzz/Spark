@@ -54,3 +54,5 @@ end
 gem "jwt", "~> 2.7"
 
 gem 'simplecov', require: false, group: :test
+
+gem "fast_jsonapi", "~> 1.5"

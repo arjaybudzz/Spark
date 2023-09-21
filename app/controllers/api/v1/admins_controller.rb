@@ -4,18 +4,18 @@ class Api::V1::AdminsController < ApplicationController
 
   def index
     @admin = Admin.all
-    render json: @admin
+    render json: AdminSerializer.new(@admin).serializable_hash
   end
 
   def show
-    render json: @admin
+    render json: AdminSerializer.new(@admin).serializable_hash
   end
 
   def create
     @admin = Admin.new(permitted_admin_params)
 
     if @admin.save
-      render json: @admin, status: :created
+      render json: AdminSerializer.new(@admin).serializable_hash, status: :created
     else
       render json: @admin.errors, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class Api::V1::AdminsController < ApplicationController
 
   def update
     if @admin.update(permitted_admin_params)
-      render json: @admin, status: :ok
+      render json: AdminSerializer.new(@admin).serializable_hash, status: :ok
     else
       render json: @admin.errors, status: :unprocessable_entity
     end

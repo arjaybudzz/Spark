@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
         post api_v1_tokens_url, params: { admin: admin_params }, as: :json
       end
 
-      it { expect(json['token'].nil?).to eq(false) }
+      it { expect(json[:token].nil?).to eq(false) }
       it { expect(response).to have_http_status(:success) }
     end
 

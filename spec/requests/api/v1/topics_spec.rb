@@ -14,7 +14,7 @@ RSpec.describe 'Api::V1::Topics', type: :request do
       get api_v1_topics_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) } # including the topic object at the setup
+    it { expect(json[:data].length).to eq(10) } # including the topic object at the setup
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -23,7 +23,8 @@ RSpec.describe 'Api::V1::Topics', type: :request do
       get api_v1_topic_url(@topic), as: :json
     end
 
-    it { expect(json['name']).to match(@topic.name) }
+    it { expect(json[:data][:attributes][:name]).to match(@topic.name) }
+    it { expect(json[:data][:attributes][:discussion]).to match(@topic.discussion) }
     it { expect(response).to have_http_status(:success) }
   end
 

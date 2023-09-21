@@ -14,7 +14,7 @@ RSpec.describe 'Api::V1::Admins', type: :request do
       get api_v1_admins_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) } #including the @admin in the setup
+    it { expect(json[:data].length).to eq(10) } #including the @admin in the setup
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -23,7 +23,7 @@ RSpec.describe 'Api::V1::Admins', type: :request do
       get api_v1_admin_url(@admin), as: :json
     end
 
-    it { expect(json['email']).to match(@admin.email) }
+    it { expect(json[:data][:attributes][:email]).to match(@admin.email) }
     it { expect(response).to have_http_status(:success) }
   end
 

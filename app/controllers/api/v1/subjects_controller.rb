@@ -5,18 +5,18 @@ class Api::V1::SubjectsController < ApplicationController
 
   def index
     @subject = Subject.all
-    render json: @subject
+    render json: SubjectSerializer.new(@subject).serializable_hash
   end
 
   def show
-    render json: @subject
+    render json: SubjectSerializer.new(@subject).serializable_hash
   end
 
   def create
     @subject = current_admin.subjects.build(permitted_subject_params)
 
     if @subject.save
-      render json: @subject, status: :created
+      render json: SubjectSerializer.new(@subject).serializable_hash, status: :created
     else
       render json: @subject.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class Api::V1::SubjectsController < ApplicationController
 
   def update
     if @subject.update(permitted_subject_params)
-      render json: @subject, status: :ok
+      render json: SubjectSerializer.new(@subject).serializable_hash, status: :ok
     else
       render json: @subject.errors, status: :unprocessable_entity
     end
