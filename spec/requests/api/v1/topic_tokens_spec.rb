@@ -15,6 +15,7 @@ RSpec.describe 'Api::V1::TopicTokens', type: :request do
           as: :json
       end
 
+      it { expect(json[:topic_token].nil?).to eq(false) }
       it { expect(response).to have_http_status(:success) }
     end
 

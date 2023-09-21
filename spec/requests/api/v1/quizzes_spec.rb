@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Quizzes', type: :request do
       get api_v1_quizzes_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) } # including the @quiz object above
+    it { expect(json[:data].length).to eq(10) } # including the @quiz object above
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe 'Api::V1::Quizzes', type: :request do
       get api_v1_quiz_url(@quiz), as: :json
     end
 
-    it { expect(json[:difficulty]).to match(@quiz.difficulty) }
+    it { expect(json[:data][:attributes][:difficulty]).to match(@quiz.difficulty) }
     it { expect(response).to have_http_status(:success) }
   end
 

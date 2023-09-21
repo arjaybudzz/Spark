@@ -4,7 +4,7 @@ class Api::V1::TopicTokensController < ApplicationController
 
     if @topic
       render json: {
-        token: JsonWebToken.encode(topic_id: @topic.id),
+        topic_token: JsonWebToken.encode(topic_id: @topic.id),
         name: @topic.name,
         discussion: @topic.discussion
       }
