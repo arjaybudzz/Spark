@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Topics', type: :request do
 
   setup do
-    @topic = create(:topic)
+    @topic = create(:topic_with_quizzes)
     @topic_valid_attributes = attributes_for(:topic)
     @topic_invalid_attributes = attributes_for(:empty_topic_name)
   end
@@ -26,6 +26,14 @@ RSpec.describe 'Api::V1::Topics', type: :request do
     it { expect(json[:data][:attributes][:name]).to match(@topic.name) }
     it { expect(json[:data][:attributes][:discussion]).to match(@topic.discussion) }
     it { expect(response).to have_http_status(:success) }
+
+    it 'should match its related subject' do
+      expect(json[:data][:relationships][:subject][:data][:id]).to match(@topic.subject.id.to_s)
+    end
+
+    it 'should match its associated quizzes' do
+      expect(json[:data][:relationships][:quizzes][:data][0][:id]).to match(@topic.quizzes.first.id.to_s)
+    end
   end
 
   describe 'POST /create' do

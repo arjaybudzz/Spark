@@ -23,6 +23,10 @@ RSpec.describe "Api::V1::QuizItems", type: :request do
     end
 
     it { expect(json[:data][:attributes][:problem]).to match(@quiz_item.problem) }
+    it 'should match associated quiz' do
+      expect(json[:data][:relationships][:quiz][:data][:id]).to match(@quiz_item.quiz.id.to_s)
+      expect(json[:included][0][:attributes][:difficulty]).to match(@quiz_item.quiz.difficulty)
+    end
     it { expect(response).to have_http_status(:success) }
   end
 

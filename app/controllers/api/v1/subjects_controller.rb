@@ -9,7 +9,8 @@ class Api::V1::SubjectsController < ApplicationController
   end
 
   def show
-    render json: SubjectSerializer.new(@subject).serializable_hash
+    options = { include: %i[admin topics] }
+    render json: SubjectSerializer.new(@subject, options).serializable_hash
   end
 
   def create

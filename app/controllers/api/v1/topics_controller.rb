@@ -9,7 +9,8 @@ class Api::V1::TopicsController < ApplicationController
   end
 
   def show
-    render json: TopicSerializer.new(@topic).serializable_hash
+    options = { include: %i[subject quizzes] }
+    render json: TopicSerializer.new(@topic, options).serializable_hash
   end
 
   def create

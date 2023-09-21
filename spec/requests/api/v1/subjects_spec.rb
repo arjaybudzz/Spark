@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Subjects', type: :request do
   setup do
-    @subject = create(:subject)
+    @subject = create(:subject_with_topics)
     @subject_valid_attribute = attributes_for(:subject)
     @subject_invalid_attribute = attributes_for(:empty_subject_name)
   end
@@ -23,6 +23,17 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
     end
 
     it { expect(json[:data][:attributes][:name]).to match(@subject.name) }
+
+    it 'should match its related admin' do
+      expect(json[:data][:relationships][:admin][:data][:id]).to match(@subject.admin.id.to_s)
+
+      expect(json[:included][0][:attributes][:email]).to match(@subject.admin.email)
+    end
+
+    it 'should match its related topic' do
+      expect(json[:data][:relationships][:topics][:data][0][:id]).to match(@subject.topics.first.id.to_s)
+    end
+
     it { expect(response).to have_http_status(:success) }
   end
 

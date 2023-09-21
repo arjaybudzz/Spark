@@ -8,7 +8,8 @@ class Api::V1::AdminsController < ApplicationController
   end
 
   def show
-    render json: AdminSerializer.new(@admin).serializable_hash
+    options = { include: [:subjects] }
+    render json: AdminSerializer.new(@admin, options).serializable_hash
   end
 
   def create

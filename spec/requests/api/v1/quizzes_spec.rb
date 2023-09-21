@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Quizzes', type: :request do
   setup do
-    @quiz = create(:quiz)
+    @quiz = create(:quiz_with_quiz_items)
     @quiz_valid_attribute = attributes_for(:quiz)
     @quiz_invalid_attribute = attributes_for(:empty_difficulty)
   end
@@ -23,6 +23,19 @@ RSpec.describe 'Api::V1::Quizzes', type: :request do
     end
 
     it { expect(json[:data][:attributes][:difficulty]).to match(@quiz.difficulty) }
+
+    it 'matches associated topic' do
+      expect(json[:data][:relationships][:topic][:data][:id]).to match(@quiz.topic.id.to_s)
+
+      # expect(json[:included][0][:attributes][:name]).to match(@quiz.topic.name)
+    end
+
+    it 'should match its associated quiz item' do
+      expect(json[:data][:relationships][:quiz_items][:data][0][:id]).to match(@quiz.quiz_items.first.id.to_s)
+
+      # expect(json[:included][0][:attributes][:problem]).to match(@quiz.quiz_items.first.problem)
+    end
+
     it { expect(response).to have_http_status(:success) }
   end
 
