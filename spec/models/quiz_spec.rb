@@ -4,6 +4,7 @@ RSpec.describe Quiz, type: :model do
   describe 'associations test' do
     it { should belong_to(:topic) }
     it { should have_many(:quiz_items).dependent(:destroy) }
+    it { should have_one(:answer_sheet).dependent(:destroy) }
 
     context 'destroyed quiz should destroy linked quiz items' do
       let(:sample_quiz) { create(:quiz_with_quiz_items) }
