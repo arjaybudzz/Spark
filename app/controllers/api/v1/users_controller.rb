@@ -5,18 +5,19 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     @user = User.all
-    render json: @user
+    render json: UserSerializer.new(@user).serializable_hash
   end
 
   def show
-    render json: @user
+    options = { include: %i[admin] }
+    render json: UserSerializer.new(@user, options).serializable_hash
   end
 
   def create
     @user = current_admin.users.build(permitted_user_params)
 
     if @user.save
-      render json: @user, status: :created
+      render json: UserSerializer.new(@user).serializable_hash, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -24,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user.update(permitted_user_params)
-      render json: @user, status: :ok
+      render json: UserSerializer.new(@user).serializable_hash, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end

@@ -31,6 +31,10 @@ RSpec.describe 'Api::V1::Admins', type: :request do
       expect(json[:included][0][:attributes][:name]).to match(@admin.subjects.first.name)
     end
 
+    # it 'should match its related users' do
+    #   expect(json[:data][:relationships][:users][:data][1][:id]).to match(@admin.users.first.id.to_s)
+    # end
+
     it { expect(response).to have_http_status(:success) }
   end
 

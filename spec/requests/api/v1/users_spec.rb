@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
       get api_v1_users_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) }
+    it { expect(json[:data].length).to eq(10) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,8 +22,12 @@ RSpec.describe 'Api::V1::Users', type: :request do
       get api_v1_user_url(@user), as: :json
     end
 
-    it { expect(json[:email]).to match(@user.email) }
+    it { expect(json[:data][:attributes][:email]).to match(@user.email) }
     it { expect(response).to have_http_status(:success) }
+
+    it 'expect to match its associated admin' do
+      expect(json[:data][:relationships][:admin][:data][:id]).to match(@user.admin.id.to_s)
+    end
   end
 
   describe 'POST /create' do
