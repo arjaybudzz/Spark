@@ -3,4 +3,5 @@ class QuizItemSerializer
   attributes :problem, :point
 
   belongs_to :quiz
+  has_one :quiz_answer
 end

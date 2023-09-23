@@ -6,16 +6,17 @@ class Api::V1::QuizAnswersController < ApplicationController
 
   def index
     @quiz_answer = QuizAnswer.all
-    render json: @quiz_answer
+    render json: QuizAnswerSerializer.new(@quiz_answer).serializable_hash
   end
 
   def show
-    render json: @quiz_answer
+    options = { include: %i[quiz_item answer_sheet quiz_answer] }
+    render json: QuizAnswerSerializer.new(@quiz_answer, options).serializable_hash
   end
 
   def update
     if @quiz_answer.update(permitted_quiz_answer_params)
-      render json: @quiz_answer, status: :ok
+      render json: QuizAnswerSerializer.new(@quiz_answer).serializable_hash, status: :ok
     else
       render json: @quiz_answer.errors, status: :unprocessable_entity
     end
