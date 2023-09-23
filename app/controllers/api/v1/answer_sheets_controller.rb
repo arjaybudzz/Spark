@@ -17,8 +17,4 @@ class Api::V1::AnswerSheetsController < ApplicationController
   def setup_answer_sheet
     @answer_sheet = AnswerSheet.find(params[:id])
   end
-
-  def permitted_answer_sheet_params
-    params.require(:answer_sheet).permit(:score)
-  end
 end

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   describe 'association validations' do
     it { should belong_to(:user) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'body associations' do

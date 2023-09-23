@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :answer_sheets, only: %i[index show]
       resources :quiz_answers, only: %i[index show update]
       resources :posts, only: %i[index show create update destroy]
+      resources :comments, only: %i[index show create update destroy]
 
       resources :tokens, only: %i[create]
       resources :subject_tokens, only: %i[create]

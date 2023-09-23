@@ -9,4 +9,10 @@ module PostAuthentication
 
     @current_post = Post.find(decoded[:post_id]) rescue ActiveRecord::RecordNotFound
   end
+
+  protected
+
+  def check_existing_post
+    head :forbidden unless current_post
+  end
 end
