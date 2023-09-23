@@ -6,6 +6,7 @@ class MockController
   include QuizItemAuthentication
   include UserAuthentication
   include AnswerSheetAuthentication
+  include PostAuthentication
 
   attr_accessor :request
 
