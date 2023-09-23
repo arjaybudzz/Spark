@@ -5,4 +5,5 @@ class ApplicationController < ActionController::API
   include QuizAuthentication
   include QuizItemAuthentication
   include UserAuthentication
+  include AnswerSheetAuthentication
 end

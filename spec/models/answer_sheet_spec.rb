@@ -4,6 +4,7 @@ RSpec.describe AnswerSheet, type: :model do
   describe 'association validations' do
     it { should belong_to(:user) }
     it { should belong_to(:quiz) }
+    it { should have_many(:quiz_answers) }
   end
 
   describe 'score validation' do

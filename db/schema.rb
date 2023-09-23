@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_22_141853) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_061044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_141853) do
     t.datetime "updated_at", null: false
     t.index ["quiz_id"], name: "index_answer_sheets_on_quiz_id"
     t.index ["user_id"], name: "index_answer_sheets_on_user_id"
+  end
+
+  create_table "quiz_answers", force: :cascade do |t|
+    t.string "answer", default: "unknown"
+    t.bigint "quiz_item_id", null: false
+    t.bigint "answer_sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_sheet_id"], name: "index_quiz_answers_on_answer_sheet_id"
+    t.index ["quiz_item_id"], name: "index_quiz_answers_on_quiz_item_id"
   end
 
   create_table "quiz_items", force: :cascade do |t|
@@ -89,6 +99,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_141853) do
 
   add_foreign_key "answer_sheets", "quizzes"
   add_foreign_key "answer_sheets", "users"
+  add_foreign_key "quiz_answers", "answer_sheets"
+  add_foreign_key "quiz_answers", "quiz_items"
   add_foreign_key "quiz_items", "quizzes"
   add_foreign_key "quizzes", "topics"
   add_foreign_key "subjects", "admins"
