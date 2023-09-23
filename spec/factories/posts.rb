@@ -3,6 +3,12 @@ FactoryBot.define do
     body { "MyText" }
     upvote { 1 }
     downvote { 1 }
-    user { nil }
+    user { association :user }
+
+    trait :invalid do
+      body { nil }
+    end
+
+    factory :empty_post, traits: [:invalid]
   end
 end
