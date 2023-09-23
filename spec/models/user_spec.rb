@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
     it { should belong_to(:admin) }
     it { should have_many(:answer_sheets).dependent(:destroy) }
     it { should have_many(:quizzes).through(:answer_sheets) }
+    it { should have_many(:posts).dependent(:destroy) }
   end
 
   describe 'credibility validations' do
