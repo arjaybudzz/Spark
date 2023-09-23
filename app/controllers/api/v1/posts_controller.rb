@@ -5,18 +5,19 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     @post = Post.all
-    render json: @post
+    render json: PostSerializer.new(@post).serializable_hash
   end
 
   def show
-    render json: @post
+    options = { include: [:user] }
+    render json: PostSerializer.new(@post, options).serializable_hash
   end
 
   def create
     @post = current_user.posts.build(permitted_post_params)
 
     if @post.save
-      render json: @post, status: :created
+      render json: PostSerializer.new(@post).serializable_hash, status: :created
     else
       render json: @post.errors, status: :unprocessable_entity
     end
@@ -24,7 +25,7 @@ class Api::V1::PostsController < ApplicationController
 
   def update
     if @post.update(permitted_post_params)
-      render json: @post, status: :ok
+      render json: PostSerializer.new(@post).serializable_hash, status: :ok
     else
       render json: @post.errors, status: :unprocessable_entity
     end

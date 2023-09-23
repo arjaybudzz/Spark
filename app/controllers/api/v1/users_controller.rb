@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    options = { include: %i[admin answer_sheets] }
+    options = { include: %i[admin answer_sheets posts] }
     render json: UserSerializer.new(@user, options).serializable_hash
   end
 

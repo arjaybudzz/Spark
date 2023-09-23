@@ -4,4 +4,5 @@ class UserSerializer
 
   belongs_to :admin
   has_many :answer_sheets
+  has_many :posts
 end
