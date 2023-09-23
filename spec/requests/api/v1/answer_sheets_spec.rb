@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::AnswerSheets', type: :request do
   setup do
     @answer_sheet = create(:answer_sheet)
+    @answer_sheet_sample = attributes_for(:answer_sheet)
+    @invalid_answer_sheet = attributes_for(:empty_quiz)
   end
 
   describe 'GET /index' do
@@ -10,8 +12,7 @@ RSpec.describe 'Api::V1::AnswerSheets', type: :request do
       create_list(:answer_sheet, 9)
       get api_v1_answer_sheets_url, as: :json
     end
-
-    it { expect(json.length).to eq(10) }
+    it { expect(json.length).to eq(19) }
     it { expect(response).to have_http_status(:success) }
   end
 

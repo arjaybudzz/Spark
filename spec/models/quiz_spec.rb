@@ -5,6 +5,7 @@ RSpec.describe Quiz, type: :model do
     it { should belong_to(:topic) }
     it { should have_many(:quiz_items).dependent(:destroy) }
     it { should have_one(:answer_sheet).dependent(:destroy) }
+    it { should have_many(:users).through(:answer_sheet) }
 
     context 'destroyed quiz should destroy linked quiz items' do
       let(:sample_quiz) { create(:quiz_with_quiz_items) }
@@ -12,6 +13,14 @@ RSpec.describe Quiz, type: :model do
       before { sample_quiz.destroy }
 
       it { expect(QuizItem.count).to eq(0) }
+    end
+
+    context 'automatically create an answersheet if user and quiz exists' do
+      before do
+        @quiz = create(:quiz)
+      end
+
+      it { expect(@quiz.create_answer_sheet).to eq(@quiz.answer_sheet) }
     end
   end
 
