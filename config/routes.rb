@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :quiz_item_tokens, only: %i[create]
       resources :user_tokens, only: %i[create]
       resources :answer_sheet_tokens, only: %i[create]
+      resources :post_tokens, only: %i[create]
     end
   end
 end

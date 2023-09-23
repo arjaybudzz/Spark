@@ -9,6 +9,11 @@ FactoryBot.define do
       body { nil }
     end
 
+    trait :invalid_input do
+      body { 'some text' }
+    end
+
     factory :empty_post, traits: [:invalid]
+    factory :other_post, traits: [:invalid_input]
   end
 end
