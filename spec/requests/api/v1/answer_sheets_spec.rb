@@ -12,7 +12,7 @@ RSpec.describe 'Api::V1::AnswerSheets', type: :request do
       create_list(:answer_sheet, 9)
       get api_v1_answer_sheets_url, as: :json
     end
-    it { expect(json.length).to eq(19) }
+    it { expect(json[:data].length).to eq(19) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -21,7 +21,16 @@ RSpec.describe 'Api::V1::AnswerSheets', type: :request do
       get api_v1_answer_sheet_url(@answer_sheet), as: :json
     end
 
-    it { expect(json[:score]).to match(@answer_sheet.score) }
+    it { expect(json[:data][:attributes][:score]).to match(@answer_sheet.score) }
     it { expect(response).to have_http_status(:success) }
+
+    it 'should match its associated quiz' do
+
+      expect(json[:data][:relationships][:quiz][:data][:id]).to match(@answer_sheet.quiz.id.to_s)
+    end
+
+    it 'should match its associated user' do
+      expect(json[:data][:relationships][:user][:data][:id]).to match(@answer_sheet.user.id.to_s)
+    end
   end
 end

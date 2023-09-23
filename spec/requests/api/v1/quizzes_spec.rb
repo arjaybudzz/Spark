@@ -36,6 +36,10 @@ RSpec.describe 'Api::V1::Quizzes', type: :request do
       # expect(json[:included][0][:attributes][:problem]).to match(@quiz.quiz_items.first.problem)
     end
 
+    # it 'expect to match its associated answersheet' do
+    #  expect(json[:data][:relationships][:answer_sheet][:data][0][:id]).to match(@quiz.answer_sheet.id.to_s)
+    # end
+
     it { expect(response).to have_http_status(:success) }
   end
 

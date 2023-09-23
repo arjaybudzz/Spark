@@ -9,7 +9,7 @@ class Api::V1::QuizzesController < ApplicationController
   end
 
   def show
-    options = { include: %i[topic quiz_items] }
+    options = { include: %i[topic quiz_items answer_sheet] }
     render json: QuizSerializer.new(@quiz, options).serializable_hash
   end
 

@@ -4,14 +4,13 @@ class Api::V1::AnswerSheetsController < ApplicationController
 
   def index
     @answer_sheet = AnswerSheet.all
-    render json: @answer_sheet
+    render json: AnswerSheetSerializer.new(@answer_sheet).serializable_hash
   end
 
   def show
-    render json: @answer_sheet
+    options = { include: %i[user quiz] }
+    render json: AnswerSheetSerializer.new(@answer_sheet, options).serializable_hash
   end
-
-  # Continue this controller
 
   private
 

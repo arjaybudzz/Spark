@@ -28,6 +28,10 @@ RSpec.describe 'Api::V1::Users', type: :request do
     it 'expect to match its associated admin' do
       expect(json[:data][:relationships][:admin][:data][:id]).to match(@user.admin.id.to_s)
     end
+
+    # it 'expect to match its associated answersheets' do
+    #   expect(json[:data][:relationships][:answer_sheets][:data][0][:id]).to match(@user.answer_sheets.first.id.to_s)
+    # end
   end
 
   describe 'POST /create' do

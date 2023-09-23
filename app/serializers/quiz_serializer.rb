@@ -4,4 +4,5 @@ class QuizSerializer
 
   belongs_to :topic
   has_many :quiz_items
+  has_one :answer_sheet
 end
