@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       get api_v1_comments_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) }
+    it { expect(json[:data].length).to eq(10) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,8 +22,12 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       get api_v1_comment_url(@comment), as: :json
     end
 
-    it { expect(json[:body]).to match(@comment.body) }
+    it { expect(json[:data][:attributes][:body]).to match(@comment.body) }
     it { expect(response).to have_http_status(:success) }
+
+    it 'should match its associated post' do
+      expect(json[:data][:relationships][:post][:data][:id]).to match(@comment.post.id.to_s)
+    end
   end
 
   describe 'POST /create' do

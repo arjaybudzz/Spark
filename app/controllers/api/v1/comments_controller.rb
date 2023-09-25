@@ -5,18 +5,19 @@ class Api::V1::CommentsController < ApplicationController
 
   def index
     @comment = Comment.all
-    render json: @comment
+    render json: CommentSerializer.new(@comment).serializable_hash
   end
 
   def show
-    render json: @comment
+    options = { include: [:post] }
+    render json: CommentSerializer.new(@comment, options).serializable_hash
   end
 
   def create
     @comment = current_post.comments.build(permitted_comment_params)
 
     if @comment.save
-      render json: @comment, status: :created
+      render json: CommentSerializer.new(@comment).serializable_hash, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -24,7 +25,7 @@ class Api::V1::CommentsController < ApplicationController
 
   def update
     if @comment.update(permitted_comment_params)
-      render json: @comment, status: :ok
+      render json: CommentSerializer.new(@comment).serializable_hash, status: :ok
     else
       render json: @comment.errors, status: :unprocessable_entity
     end

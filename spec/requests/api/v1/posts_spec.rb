@@ -29,6 +29,10 @@ RSpec.describe 'Api::V1::Posts', type: :request do
       expect(json[:data][:relationships][:user][:data][:id]).to match(@post.user.id.to_s)
       expect(json[:included][0][:attributes][:email]).to match(@post.user.email)
     end
+
+    # it 'should match its associated comments' do
+    #   expect(json[:data][:relationships][:comments][:data][0][:id]).to match(@post.comments.first.id.to_s)
+    # end
   end
 
   describe 'POST /create' do
