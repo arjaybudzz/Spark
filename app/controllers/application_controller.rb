@@ -7,4 +7,5 @@ class ApplicationController < ActionController::API
   include UserAuthentication
   include AnswerSheetAuthentication
   include PostAuthentication
+  include CommentAuthentication
 end
