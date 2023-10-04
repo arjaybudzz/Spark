@@ -1,6 +1,7 @@
 class Api::V1::AdminsController < ApplicationController
   before_action :setup_admin, only: %i[show update destroy]
   before_action :check_login, only: %i[update destroy]
+  wrap_parameters include: %i[first_name middle_name last_name email password password_confirmation]
 
   def index
     @admin = Admin.all

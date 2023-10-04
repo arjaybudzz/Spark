@@ -2,6 +2,7 @@ class Api::V1::QuizItemsController < ApplicationController
   before_action :setup_quiz_item, only: %i[show update destroy]
   before_action :check_existing_quiz, only: %i[create]
   before_action :check_quiz, only: %i[update destroy]
+  wrap_parameters include: %i[problem answer point first_choice second_choice third_choice fourth_choice]
 
   def index
     @quiz_item = QuizItem.all
@@ -44,7 +45,7 @@ class Api::V1::QuizItemsController < ApplicationController
   end
 
   def permitted_quiz_item_params
-    params.require(:quiz_item).permit(:problem, :answer, :point)
+    params.require(:quiz_item).permit(:problem, :first_choice, :second_choice, :third_choice, :fourth_choice, :answer, :point)
   end
 
   def check_quiz

@@ -2,6 +2,10 @@ FactoryBot.define do
   factory :quiz_item do
     problem { "MyText" }
     answer { "MyString" }
+    first_choice { "A" }
+    second_choice { "B" }
+    third_choice { "C" }
+    fourth_choice { "D" }
     point { 1 }
     quiz { association :quiz }
 

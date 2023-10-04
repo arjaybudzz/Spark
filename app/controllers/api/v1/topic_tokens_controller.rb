@@ -6,7 +6,8 @@ class Api::V1::TopicTokensController < ApplicationController
       render json: {
         topic_token: JsonWebToken.encode(topic_id: @topic.id),
         name: @topic.name,
-        discussion: @topic.discussion
+        discussion: @topic.discussion,
+        id: @topic.id
       }
     else
       head :unauthorized

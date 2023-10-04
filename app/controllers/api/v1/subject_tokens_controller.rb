@@ -6,7 +6,8 @@ class Api::V1::SubjectTokensController < ApplicationController
       render json: {
         token: JsonWebToken.encode(subject_id: @subject.id),
         name: @subject.name,
-        admin_id: @subject.admin_id
+        admin_id: @subject.admin_id,
+        subject_id: @subject.id
       }
     else
       head :unauthorized

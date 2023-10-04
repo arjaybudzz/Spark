@@ -7,6 +7,10 @@ class QuizItem < ApplicationRecord
   validates :problem, presence: true
   validates :answer, presence: true
   validates :point, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :first_choice, presence: true
+  validates :second_choice, presence: true
+  validates :third_choice, presence: true
+  validates :fourth_choice, presence: true
 
   def create_quiz_answer_slot
     QuizAnswer.create!(answer_sheet_id: AnswerSheet.last.id, quiz_item_id: id, answer: 'unknown') if AnswerSheet.last

@@ -1,4 +1,6 @@
 class Api::V1::TokensController < ApplicationController
+  wrap_parameters include: %i[email password]
+
   def create
     @admin = Admin.find_by_email(permitted_admin_login_params[:email])
 
