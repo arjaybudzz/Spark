@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_25_114718) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_113443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,6 +45,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_114718) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
+  create_table "coverages", force: :cascade do |t|
+    t.string "name"
+    t.bigint "admin_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_coverages_on_admin_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.integer "upvote", default: 0
@@ -68,16 +76,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_114718) do
   create_table "quiz_items", force: :cascade do |t|
     t.text "problem"
     t.string "answer"
-    t.integer "point", default: 0
+    t.integer "point", default: 1
     t.bigint "quiz_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_choice"
+    t.string "second_choice"
+    t.string "third_choice"
+    t.string "fourth_choice"
     t.index ["quiz_id"], name: "index_quiz_items_on_quiz_id"
   end
 
   create_table "quizzes", force: :cascade do |t|
     t.string "difficulty"
-    t.integer "score", default: 0
+    t.integer "score", default: 10
     t.bigint "topic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_114718) do
   add_foreign_key "answer_sheets", "quizzes"
   add_foreign_key "answer_sheets", "users"
   add_foreign_key "comments", "posts"
+  add_foreign_key "coverages", "admins"
   add_foreign_key "posts", "users"
   add_foreign_key "quiz_answers", "answer_sheets"
   add_foreign_key "quiz_answers", "quiz_items"
