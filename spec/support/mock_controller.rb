@@ -8,6 +8,7 @@ class MockController
   include AnswerSheetAuthentication
   include PostAuthentication
   include CommentAuthentication
+  include SubjectCoverageAuthentication
 
   attr_accessor :request
 

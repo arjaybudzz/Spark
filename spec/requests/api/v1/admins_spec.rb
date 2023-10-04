@@ -4,13 +4,14 @@ RSpec.describe 'Api::V1::Admins', type: :request do
 
   setup do
     @admin = create(:admin_with_subjects)
+    @admin_with_subject_coverages = create(:admin_with_subject_coverages)
     @admin_valid_attribute = attributes_for(:admin)
     @admin_invalid_attribute = attributes_for(:empty_email)
   end
 
   describe 'GET /index' do
     before do
-      create_list(:admin, 9)
+      create_list(:admin, 8)
       get api_v1_admins_url, as: :json
     end
 
@@ -30,6 +31,10 @@ RSpec.describe 'Api::V1::Admins', type: :request do
 
       expect(json[:included][0][:attributes][:name]).to match(@admin.subjects.first.name)
     end
+
+    # it 'should match its related coverage' do
+    #   expect(json[:data][:relationships][:subject_coverages][:data][0][:id]).to match(@admin_with_subject_coverages.subject_coverages.first.id.to_s)
+    # end
 
     # it 'should match its related users' do
     #   expect(json[:data][:relationships][:users][:data][1][:id]).to match(@admin.users.first.id.to_s)

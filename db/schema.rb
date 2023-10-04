@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_055712) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_115812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_055712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
+  create_table "coverages", force: :cascade do |t|
+    t.string "name"
+    t.bigint "admin_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_coverages_on_admin_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -98,6 +106,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_055712) do
     t.index ["comment_id"], name: "index_replies_on_comment_id"
   end
 
+  create_table "subject_coverages", force: :cascade do |t|
+    t.string "name"
+    t.bigint "admin_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_subject_coverages_on_admin_id"
+  end
+
   create_table "subjects", force: :cascade do |t|
     t.string "name"
     t.bigint "admin_id", null: false
@@ -134,12 +150,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_055712) do
   add_foreign_key "answer_sheets", "quizzes"
   add_foreign_key "answer_sheets", "users"
   add_foreign_key "comments", "posts"
+  add_foreign_key "coverages", "admins"
   add_foreign_key "posts", "users"
   add_foreign_key "quiz_answers", "answer_sheets"
   add_foreign_key "quiz_answers", "quiz_items"
   add_foreign_key "quiz_items", "quizzes"
   add_foreign_key "quizzes", "topics"
   add_foreign_key "replies", "comments"
+  add_foreign_key "subject_coverages", "admins"
   add_foreign_key "subjects", "admins"
   add_foreign_key "topics", "subjects"
   add_foreign_key "users", "admins"
