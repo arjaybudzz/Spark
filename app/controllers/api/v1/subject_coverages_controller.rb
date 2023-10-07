@@ -8,7 +8,7 @@ class Api::V1::SubjectCoveragesController < ApplicationController
   end
 
   def show
-    options = { include: %i[admin] }
+    options = { include: %i[admin subjects] }
     render json: SubjectCoverageSerializer.new(@subject_coverage, options).serializable_hash
   end
 

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :subject do
     name { Faker::Name.unique.first_name }
-    admin { association :admin }
+    subject_coverage { association :subject_coverage }
 
     trait :invalid do
       name { nil }

@@ -3,4 +3,5 @@ class SubjectCoverageSerializer
   attributes :name
 
   belongs_to :admin
+  has_many :subjects
 end

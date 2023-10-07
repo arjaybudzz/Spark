@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Subject, type: :model do
   describe 'associations test' do
-    it { should belong_to(:admin) }
+    it { should belong_to(:subject_coverage) }
     it { should have_many(:topics).dependent(:destroy) }
 
     context 'destroyed subjects must destroy linked topics' do
@@ -20,7 +20,7 @@ RSpec.describe Subject, type: :model do
     context 'should ensure subject uniqueness with scope to admin' do
       before { create(:subject) }
 
-      it { should validate_uniqueness_of(:name).scoped_to(:admin_id) }
+      it { should validate_uniqueness_of(:name).scoped_to(:subject_coverage_id) }
     end
   end
 end

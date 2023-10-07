@@ -1,7 +1,6 @@
 class Api::V1::QuizAnswersController < ApplicationController
   before_action :setup_quiz_answer, only: %i[show update]
-  before_action :check_current_answer_sheet, only: %i[create update]
-  before_action :check_existing_quiz_item, only: %i[update]
+  before_action :check_current_answer_sheet, only: %i[create]
   before_action :check_quiz_item, only: %i[update]
 
   def index

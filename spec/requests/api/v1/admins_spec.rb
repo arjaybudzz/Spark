@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Admins', type: :request do
 
   setup do
-    @admin = create(:admin_with_subjects)
+    @admin = create(:admin_with_subject_coverages)
     @admin_with_subject_coverages = create(:admin_with_subject_coverages)
     @admin_valid_attribute = attributes_for(:admin)
     @admin_invalid_attribute = attributes_for(:empty_email)
@@ -27,9 +27,9 @@ RSpec.describe 'Api::V1::Admins', type: :request do
     it { expect(json[:data][:attributes][:email]).to match(@admin.email) }
 
     it 'should match its related subjects' do
-      expect(json[:data][:relationships][:subjects][:data][0][:id]).to match(@admin.subjects.first.id.to_s)
+      expect(json[:data][:relationships][:subject_coverages][:data][0][:id]).to match(@admin.subject_coverages.first.id.to_s)
 
-      expect(json[:included][0][:attributes][:name]).to match(@admin.subjects.first.name)
+      expect(json[:included][0][:attributes][:name]).to match(@admin.subject_coverages.first.name)
     end
 
     # it 'should match its related coverage' do

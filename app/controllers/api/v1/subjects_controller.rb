@@ -1,7 +1,7 @@
 class Api::V1::SubjectsController < ApplicationController
   before_action :setup_subject, only: %i[show update destroy]
-  before_action :check_login, only: %i[create]
-  before_action :check_owner, only: %i[update destroy]
+  before_action :check_existing_coverage, only: %i[create]
+  before_action :check_coverage, only: %i[update destroy]
 
   def index
     @subject = Subject.all
@@ -9,12 +9,12 @@ class Api::V1::SubjectsController < ApplicationController
   end
 
   def show
-    options = { include: %i[admin topics] }
+    options = { include: %i[subject_coverage topics] }
     render json: SubjectSerializer.new(@subject, options).serializable_hash
   end
 
   def create
-    @subject = current_admin.subjects.build(permitted_subject_params)
+    @subject = current_subject_coverage.subjects.build(permitted_subject_params)
 
     if @subject.save
       render json: SubjectSerializer.new(@subject).serializable_hash, status: :created
@@ -46,7 +46,7 @@ class Api::V1::SubjectsController < ApplicationController
     params.require(:subject).permit(:name)
   end
 
-  def check_owner
-    head :forbidden unless @subject.admin_id == current_admin&.id
+  def check_coverage
+    head :forbidden unless @subject.subject_coverage_id == current_subject_coverage&.id
   end
 end

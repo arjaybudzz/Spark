@@ -2,6 +2,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :setup_user, only: %i[show update destroy]
   before_action :check_login, only: %i[create]
   before_action :check_owner, only: %i[update destroy]
+  wrap_parameters include: %i[first_name middle_name last_name email password password_confirmation]
 
   def index
     @user = User.all

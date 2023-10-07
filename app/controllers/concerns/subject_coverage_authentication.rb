@@ -9,4 +9,10 @@ module SubjectCoverageAuthentication
 
     @current_subject_coverage = SubjectCoverage.find(decoded[:subject_coverage_id]) rescue ActiveRecord::RecordNotFound
   end
+
+  protected
+
+  def check_existing_coverage
+    head :forbidden unless current_subject_coverage
+  end
 end

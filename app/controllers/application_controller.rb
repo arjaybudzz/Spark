@@ -8,4 +8,5 @@ class ApplicationController < ActionController::API
   include AnswerSheetAuthentication
   include PostAuthentication
   include CommentAuthentication
+  include SubjectCoverageAuthentication
 end

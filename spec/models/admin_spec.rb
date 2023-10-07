@@ -35,16 +35,15 @@ RSpec.describe Admin, type: :model do
   end
 
   describe 'associations test' do
-    it { should have_many(:subjects).dependent(:destroy) }
     it { should have_many(:users).dependent(:destroy) }
     it { should have_many(:subject_coverages).dependent(:destroy) }
 
-    context 'destroyed admin should destroy linked subjects' do
-      let(:admin_sample) { create(:admin_with_subjects) }
+    context 'destroyed admin should destroy linked subject coverages' do
+      let(:admin_sample) { create(:admin_with_subject_coverages) }
 
       before { admin_sample.destroy }
 
-      it { expect(Subject.count).to eq(0) }
+      it { expect(SubjectCoverage.count).to eq(0) }
     end
 
     context 'destroyed admin should destroy linked users' do

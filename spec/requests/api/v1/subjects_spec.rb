@@ -25,9 +25,9 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
     it { expect(json[:data][:attributes][:name]).to match(@subject.name) }
 
     it 'should match its related admin' do
-      expect(json[:data][:relationships][:admin][:data][:id]).to match(@subject.admin.id.to_s)
+      expect(json[:data][:relationships][:subject_coverage][:data][:id]).to match(@subject.subject_coverage.id.to_s)
 
-      expect(json[:included][0][:attributes][:email]).to match(@subject.admin.email)
+      expect(json[:included][0][:attributes][:name]).to match(@subject.subject_coverage.name)
     end
 
     it 'should match its related topic' do
@@ -42,7 +42,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       before do
         post api_v1_subjects_url,
           params: { subject: @subject_valid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @subject.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(subject_coverage_id: @subject.subject_coverage_id) },
           as: :json
       end
 
@@ -53,7 +53,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       before do
         post api_v1_subjects_url,
           params: { subject: @subject_invalid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @subject.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(subject_coverage_id: @subject.subject_coverage_id) },
           as: :json
       end
 
@@ -76,7 +76,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       before do
         put api_v1_subject_url(@subject),
           params: { subject: @subject_valid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @subject.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(subject_coverage_id: @subject.subject_coverage_id) },
           as: :json
       end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
       before do
         put api_v1_subject_url(@subject),
           params: { subject: @subject_invalid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @subject.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(subject_coverage_id: @subject.subject_coverage_id) },
           as: :json
       end
 
@@ -109,7 +109,7 @@ RSpec.describe 'Api::V1::Subjects', type: :request do
     context 'destroy subject if admin is the owner' do
       before do
         delete api_v1_subject_url(@subject),
-          headers: { Authorization: JsonWebToken.encode(admin_id: @subject.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(subject_coverage_id: @subject.subject_coverage_id) },
           as: :json
       end
 
