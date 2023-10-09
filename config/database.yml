@@ -85,3 +85,4 @@ production:
   database: Spark_production
   username: Spark
   password: <%= ENV["SPARK_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL']%>
