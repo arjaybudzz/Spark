@@ -3,6 +3,7 @@ FactoryBot.define do
     body { "MyText" }
     upvote { 1 }
     downvote { 1 }
+    user_name { "name" }
     comment { association :comment }
 
 

@@ -23,6 +23,14 @@ FactoryBot.define do
       end
     end
 
+    factory :quiz_with_answer_sheet do
+
+      after(:create) do |quiz|
+        create(:answer_sheet, quiz: quiz)
+        quiz.reload
+      end
+    end
+
     factory :quiz_sample do
       difficulty { 'Easy' }
       score { 50 }

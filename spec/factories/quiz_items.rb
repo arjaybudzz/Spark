@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :quiz_item do
     problem { "MyText" }
-    answer { "MyString" }
+    answer { "A" }
     first_choice { "A" }
     second_choice { "B" }
     third_choice { "C" }
@@ -15,6 +15,21 @@ FactoryBot.define do
 
     trait :wrong do
       problem { 'x + y = 6' }
+    end
+
+    factory :quiz_item_with_correct_answer do
+
+      after(:create) do |quiz_item|
+        create(:quiz_answer, answer: 'A')
+        quiz_item.reload
+      end
+    end
+
+    factory :quiz_item_with_wrong_answer do
+      after(:create) do |quiz_item|
+        create(:quiz_answer, answer: 'B')
+        quiz_item.reload
+      end
     end
 
     factory :empty_quiz_problem, traits: [:invalid]

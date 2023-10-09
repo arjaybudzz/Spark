@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Posts', type: :request do
   setup do
     @post = create(:post)
-    @post_valid_attributes = attributes_for(:post)
+    @post_valid_attributes = attributes_for(:sample_post)
     @post_invalid_attributes = attributes_for(:empty_post)
   end
 
@@ -74,7 +74,6 @@ RSpec.describe 'Api::V1::Posts', type: :request do
       before do
         put api_v1_post_url(@post),
           params: { post: @post_valid_attributes },
-          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
           as: :json
       end
 
@@ -85,21 +84,10 @@ RSpec.describe 'Api::V1::Posts', type: :request do
       before do
         put api_v1_post_url(@post),
           params: { post: @post_invalid_attributes },
-          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
-    end
-
-    context 'forbid to update post if there is no post' do
-      before do
-        put api_v1_post_url(@post),
-          params: { post: @post_valid_attributes },
-          as: :json
-      end
-
-      it { expect(response).to have_http_status(:forbidden) }
     end
   end
 

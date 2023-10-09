@@ -69,7 +69,6 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       before do
         put api_v1_comment_url(@comment),
           params: { comment: @comment_valid_attribute },
-          headers: { Authorization: JsonWebToken.encode(post_id: @comment.post_id) },
           as: :json
       end
 
@@ -80,21 +79,10 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       before do
         put api_v1_comment_url(@comment),
           params: { comment: @comment_invalid_attributes },
-          headers: { Authorization: JsonWebToken.encode(post_id: @comment.post_id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
-    end
-
-    context 'forbid to update comment if there is no post and comment' do
-      before do
-        put api_v1_comment_url(@comment),
-          params: { comment: @comment_valid_attribute },
-          as: :json
-      end
-
-      it { expect(response).to have_http_status(:forbidden) }
     end
   end
 

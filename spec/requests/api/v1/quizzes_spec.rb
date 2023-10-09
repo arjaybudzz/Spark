@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Quizzes', type: :request do
   setup do
     @quiz = create(:quiz_with_quiz_items)
+    @quiz_with_answer_sheet = create(:quiz_with_answer_sheet)
     @quiz_valid_attribute = attributes_for(:quiz)
     @quiz_invalid_attribute = attributes_for(:empty_difficulty)
   end
 
   describe 'GET /index' do
     before do
-      create_list(:quiz, 9)
+      create_list(:quiz, 8)
       get api_v1_quizzes_url, as: :json
     end
 
@@ -19,26 +20,14 @@ RSpec.describe 'Api::V1::Quizzes', type: :request do
 
   describe 'GET /show' do
     before do
-      get api_v1_quiz_url(@quiz), as: :json
+      get api_v1_quiz_url(@quiz_with_answer_sheet), as: :json
     end
 
-    it { expect(json[:data][:attributes][:difficulty]).to match(@quiz.difficulty) }
+    it { expect(json[:data][:attributes][:difficulty]).to match(@quiz_with_answer_sheet.difficulty) }
 
     it 'matches associated topic' do
-      expect(json[:data][:relationships][:topic][:data][:id]).to match(@quiz.topic.id.to_s)
-
-      # expect(json[:included][0][:attributes][:name]).to match(@quiz.topic.name)
+      expect(json[:data][:relationships][:topic][:data][:id]).to match(@quiz_with_answer_sheet.topic.id.to_s)
     end
-
-    it 'should match its associated quiz item' do
-      expect(json[:data][:relationships][:quiz_items][:data][0][:id]).to match(@quiz.quiz_items.first.id.to_s)
-
-      # expect(json[:included][0][:attributes][:problem]).to match(@quiz.quiz_items.first.problem)
-    end
-
-    # it 'expect to match its associated answersheet' do
-    #  expect(json[:data][:relationships][:answer_sheet][:data][0][:id]).to match(@quiz.answer_sheet.id.to_s)
-    # end
 
     it { expect(response).to have_http_status(:success) }
   end

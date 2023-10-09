@@ -10,16 +10,20 @@ RSpec.describe "Api::V1::QuizItems", type: :request do
   describe 'GET /index' do
     before do
       create_list(:quiz_item, 9)
-      get api_v1_quiz_items_url, as: :json
+      get api_v1_quiz_items_url,
+        headers: { Authorization: JsonWebToken.encode(quiz_id: @quiz_item.quiz_id) }, as: :json
     end
 
-    it { expect(json[:data].length).to eq(10) }
+    it { expect(json[:data].length).to eq(1) }
     it { expect(response).to have_http_status(:success) }
+    it { expect(json[:links][:next].nil?).to eq(false) }
+    it { expect(json[:links][:prev].nil?).to eq(false) }
   end
 
   describe 'GET /show' do
     before do
-      get api_v1_quiz_item_url(@quiz_item), as: :json
+      get api_v1_quiz_item_url(@quiz_item),
+      headers: { Authorization: JsonWebToken.encode(quiz_id: @quiz_item.quiz_id) }, as: :json
     end
 
     it { expect(json[:data][:attributes][:problem]).to match(@quiz_item.problem) }

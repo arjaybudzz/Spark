@@ -1,13 +1,23 @@
 class Api::V1::QuizItemsController < ApplicationController
   before_action :setup_quiz_item, only: %i[show update destroy]
-  before_action :check_existing_quiz, only: %i[create]
+  before_action :check_existing_quiz, only: %i[create index]
   before_action :check_quiz, only: %i[update destroy]
+
   wrap_parameters include: %i[problem answer point first_choice second_choice third_choice fourth_choice]
 
   def index
-    @quiz_item = QuizItem.all
+    @quiz_item = current_quiz.quiz_items.page(current_page).per(1)
 
-    render json: QuizItemSerializer.new(@quiz_item).serializable_hash
+    options = {
+      links: {
+        first: api_v1_quiz_items_path(page: 1),
+        last: api_v1_quiz_items_path(page: @quiz_item.total_pages),
+        prev: api_v1_quiz_items_path(page: @quiz_item.prev_page),
+        next: api_v1_quiz_items_path(page: @quiz_item.next_page)
+      }
+    }
+
+    render json: QuizItemSerializer.new(@quiz_item, options).serializable_hash
   end
 
   def show

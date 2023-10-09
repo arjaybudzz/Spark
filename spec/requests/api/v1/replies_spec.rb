@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Replies', type: :request do
       get api_v1_replies_url, as: :json
     end
 
-    it { expect(json.length).to eq(10) }
+    it { expect(json[:data].length).to eq(10) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe 'Api::V1::Replies', type: :request do
       get api_v1_reply_url(@reply), as: :json
     end
 
-    it { expect(json[:body]).to match(@reply.body) }
+    it { expect(json[:data][:attributes][:body]).to match(@reply.body) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -54,6 +54,51 @@ RSpec.describe 'Api::V1::Replies', type: :request do
         post api_v1_replies_url,
           params: { reply: @reply_valid_attributes },
           as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+  end
+
+  describe 'PUT /update' do
+    context 'update if info is valid' do
+      before do
+        put api_v1_reply_url(@reply),
+          params: { reply: @reply_valid_attributes },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:success) }
+    end
+
+    context 'do not update if info is invalid' do
+      before do
+        put api_v1_reply_url(@reply),
+          params: { reply: @reply_invalid_attributes },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    context 'destroy reply if authorized' do
+      before do
+        delete api_v1_reply_url(@reply),
+        headers: { Authorization: JsonWebToken.encode(comment_id: @reply.comment_id) },
+        as: :json
+
+      end
+
+      it { expect(response).to have_http_status(:no_content) }
+    end
+
+    context 'forbid destroy reply if unauthorized' do
+      before do
+        delete api_v1_reply_url(@reply),
+        as: :json
+
       end
 
       it { expect(response).to have_http_status(:forbidden) }

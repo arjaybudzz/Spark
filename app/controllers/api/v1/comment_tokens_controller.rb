@@ -1,14 +1,14 @@
 class Api::V1::CommentTokensController < ApplicationController
   def create
-    @reply = Reply.find_by_body(permitted_reply_params[:body])
+    @comment = Comment.find_by_body(permitted_comment_params[:body])
 
-    if @reply
+    if @comment
       render json: {
-        reply_token: JsonWebToken.encode(reply_id: @reply.id),
-        id: @reply.id,
-        body: @reply.body,
-        upvote: @reply.upvote,
-        downvote: @reply.downvote
+        comment_token: JsonWebToken.encode(comment_id: @comment.id),
+        id: @comment.id,
+        body: @comment.body,
+        upvote: @comment.upvote,
+        downvote: @comment.downvote
       }
     else
       head :unauthorized
@@ -17,7 +17,7 @@ class Api::V1::CommentTokensController < ApplicationController
 
   private
 
-  def permitted_reply_params
-    params.require(:reply).permit(:body)
+  def permitted_comment_params
+    params.require(:comment).permit(:body)
   end
 end

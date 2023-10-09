@@ -5,6 +5,7 @@ RSpec.describe 'Api::V1::QuizAnswers', type: :request do
     @quiz_answer = create(:quiz_answer)
     @quiz_answer_valid_params = attributes_for(:quiz_answer)
     @quiz_answer_invalid_params = attributes_for(:empty_answer)
+    @quiz_item = create(:quiz_item)
   end
 
   describe 'GET /index' do
@@ -13,7 +14,7 @@ RSpec.describe 'Api::V1::QuizAnswers', type: :request do
       get api_v1_quiz_answers_url, as: :json
     end
 
-    it { expect(json[:data].length).to eq(19) }
+    it { expect(json[:data].length).to eq(20) }
     it { expect(response).to have_http_status(:success) }
   end
 

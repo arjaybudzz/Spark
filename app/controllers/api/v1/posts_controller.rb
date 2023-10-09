@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApplicationController
   before_action :setup_post, only: %i[show update destroy]
   before_action :check_user_login, only: %i[create]
-  before_action :check_user_owner, only: %i[update destroy]
+  before_action :check_user_owner, only: %i[destroy]
 
   def index
     @post = Post.all

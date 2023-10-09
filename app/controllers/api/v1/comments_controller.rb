@@ -1,7 +1,9 @@
 class Api::V1::CommentsController < ApplicationController
   before_action :setup_comment, only: %i[show update destroy]
   before_action :check_existing_post, only: %i[create]
-  before_action :check_post, only: %i[update destroy]
+  before_action :check_post, only: %i[destroy]
+
+  wrap_parameters include: %i[user_name body upvote downvote]
 
   def index
     @comment = Comment.all
@@ -9,7 +11,7 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def show
-    options = { include: [:post] }
+    options = { include: %i[post replies] }
     render json: CommentSerializer.new(@comment, options).serializable_hash
   end
 
@@ -43,7 +45,7 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def permitted_comment_params
-    params.require(:comment).permit(:body, :upvote, :downvote)
+    params.require(:comment).permit(:user_name, :body, :upvote, :downvote)
   end
 
   def check_post

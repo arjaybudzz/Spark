@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :quiz_answers, only: %i[index show update]
       resources :posts, only: %i[index show create update destroy]
       resources :comments, only: %i[index show create update destroy]
-      resources :replies, only: %i[index show create]
+      resources :replies, only: %i[index show create update destroy]
       resources :subject_coverages, only: %i[index show create]
 
       resources :tokens, only: %i[create]
