@@ -55,10 +55,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def send_confirmation_email
-    UserMailer.received_confirmation(@user)
+    UserMailer.received_confirmation(@user).deliver_now
   end
 
   def compute_credibility
-    ComputeCredibility.compute(@user).deliver_now
+    ComputeCredibility.compute(@user)
   end
 end
