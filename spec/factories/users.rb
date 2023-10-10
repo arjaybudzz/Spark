@@ -3,7 +3,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     middle_name { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
-    email { Faker::Internet.unique.email(domain: 'foo.com') }
+    email { Faker::Internet.unique.email(domain: 'gmail.com') }
     credibility { 19.2 }
     admin { association :admin }
     password { 'password' }

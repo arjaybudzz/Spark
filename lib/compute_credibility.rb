@@ -8,7 +8,7 @@ class ComputeCredibility
         total_downvotes += post.downvote.to_f
       end
 
-      credibility = (total_upvotes.to_f - total_downvotes.to_f) / (total_upvotes.to_f + total_downvotes.to_f)
+      credibility = (total_upvotes.to_f) / (total_upvotes.to_f + total_downvotes.to_f)
 
       user.update(credibility: format('%.2f', credibility))
     rescue ZeroDivisionError

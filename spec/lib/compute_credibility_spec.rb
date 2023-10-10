@@ -19,6 +19,6 @@ RSpec.describe ComputeCredibility do
       ComputeCredibility.compute(@user_with_downvote_posts)
     end
 
-    it { expect(@user_with_downvote_posts.credibility).to eq(-1) }
+    it { expect(@user_with_downvote_posts.credibility).to eq(0) }
   end
 end

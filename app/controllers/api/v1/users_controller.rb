@@ -55,7 +55,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def send_confirmation_email
-    UserMailer.received_confirmation(@user).deliver_now
+    UserMailer.received_confirmation(@user).deliver_now unless @user.email.nil?
   end
 
   def compute_credibility
