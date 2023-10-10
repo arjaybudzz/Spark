@@ -9,10 +9,4 @@ module QuizItemAuthentication
 
     @current_quiz_item = QuizItem.find(decoded[:quiz_item_id]) rescue ActiveRecord::RecordNotFound
   end
-
-  protected
-
-  def check_existing_quiz_item
-    head :forbidden unless current_quiz_item
-  end
 end

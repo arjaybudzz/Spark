@@ -8,6 +8,12 @@ FactoryBot.define do
       answer { nil }
     end
 
+    trait :wrong do
+      answer { 'B' }
+    end
+
+
     factory :empty_answer, traits: [:invalid]
+    factory :wrong_answer, traits: [:wrong]
   end
 end

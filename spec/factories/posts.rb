@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :post do
     body { "MyText" }
     upvote { 1 }
-    downvote { 1 }
+    downvote { 0 }
     user { association :user }
 
     trait :invalid do
@@ -20,6 +20,12 @@ FactoryBot.define do
     factory :upvote_and_downvote do
       upvote { 1 }
       downvote { 0 }
+    end
+
+    factory :downvote_post do
+      body { "some post" }
+      upvote { 0 }
+      downvote { 1 }
     end
 
     factory :empty_post, traits: [:invalid]

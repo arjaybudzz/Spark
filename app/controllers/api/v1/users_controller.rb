@@ -2,6 +2,8 @@ class Api::V1::UsersController < ApplicationController
   before_action :setup_user, only: %i[show update destroy]
   before_action :check_login, only: %i[create]
   before_action :check_owner, only: %i[update destroy]
+  before_action :compute_credibility, only: %i[show]
+
   after_action :send_confirmation_email, only: %i[create]
   wrap_parameters include: %i[first_name middle_name last_name email password password_confirmation]
 
@@ -54,5 +56,9 @@ class Api::V1::UsersController < ApplicationController
 
   def send_confirmation_email
     UserMailer.received_confirmation(@user)
+  end
+
+  def compute_credibility
+    ComputeCredibility.compute(@user)
   end
 end

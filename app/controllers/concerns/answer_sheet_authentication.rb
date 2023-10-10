@@ -9,10 +9,4 @@ module AnswerSheetAuthentication
 
     @current_answer_sheet = AnswerSheet.find(decoded[:answer_sheet_id]) rescue ActiveRecord::RecordNotFound
   end
-
-  protected
-
-  def check_current_answer_sheet
-    head :forbidden unless current_answer_sheet
-  end
 end

@@ -34,6 +34,28 @@ FactoryBot.define do
       password { 'bad password' }
     end
 
+    factory :user_with_posts do
+      transient do
+        post_count { 10 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:post, evaluator.post_count, user: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_downvote_posts do
+      transient do
+        post_count { 10 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:downvote_post, evaluator.post_count, user: user)
+        user.reload
+      end
+    end
+
     factory :empty_user_email, traits: [:invalid]
   end
 end
