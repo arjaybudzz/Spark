@@ -3,4 +3,4 @@
 set -o errexit
 
 bundle install
-bundle exec rake db:migrate:reset
+bundle exec rake db:migrate:reset DISABLE_DATABASE_CHECK=1
