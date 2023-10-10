@@ -59,6 +59,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def compute_credibility
-    ComputeCredibility.compute(@user)
+    ComputeCredibility.compute(@user).deliver_now
   end
 end
