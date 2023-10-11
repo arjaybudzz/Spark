@@ -2,7 +2,7 @@ class Api::V1::QuizzesController < ApplicationController
   before_action :setup_quiz, only: %i[show update destroy]
   before_action :check_existing_topic, only: %i[create]
   before_action :check_quiz, only: %i[update destroy]
-  after_action :check_result, only: %i[show]
+  before_action :check_result, only: %i[show]
 
   def index
     @quiz = Quiz.all
