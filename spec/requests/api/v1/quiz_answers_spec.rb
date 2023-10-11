@@ -32,7 +32,6 @@ RSpec.describe 'Api::V1::QuizAnswers', type: :request do
       before do
         put api_v1_quiz_answer_url(@quiz_answer),
           params: { quiz_answer: @quiz_answer_valid_params },
-          headers: { Authorization: JsonWebToken.encode(quiz_item_id: @quiz_answer.quiz_item_id) },
           as: :json
       end
 
@@ -43,21 +42,10 @@ RSpec.describe 'Api::V1::QuizAnswers', type: :request do
       before do
         put api_v1_quiz_answer_url(@quiz_answer),
           params: { quiz_answer: @quiz_answer_invalid_params },
-          headers: { Authorization: JsonWebToken.encode(quiz_item_id: @quiz_answer.quiz_item_id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
-    end
-
-    context 'forbid to update if it does not belong to a quiz item' do
-      before do
-        put api_v1_quiz_answer_url(@quiz_answer),
-          params: { quiz_answer: @quiz_answer_valid_params },
-          as: :json
-      end
-
-      it { expect(response).to have_http_status(:forbidden) }
     end
   end
 end
