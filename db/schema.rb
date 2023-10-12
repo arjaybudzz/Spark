@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_08_122119) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_024413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_08_122119) do
     t.datetime "updated_at", null: false
     t.string "user_name"
     t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
+  create_table "post_up_votes", force: :cascade do |t|
+    t.boolean "is_clicked"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_up_votes_on_post_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -144,6 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_08_122119) do
   add_foreign_key "answer_sheets", "quizzes"
   add_foreign_key "answer_sheets", "users"
   add_foreign_key "comments", "posts"
+  add_foreign_key "post_up_votes", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "quiz_answers", "answer_sheets"
   add_foreign_key "quiz_answers", "quiz_items"
