@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:answer_sheets).dependent(:destroy) }
     it { should have_many(:quizzes).through(:answer_sheets) }
     it { should have_many(:posts).dependent(:destroy) }
+    it { should have_many(:post_up_votes).through(:posts) }
   end
 
   describe 'credibility validations' do

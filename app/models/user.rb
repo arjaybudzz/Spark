@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :quizzes, through: :answer_sheets
   has_many :posts, dependent: :destroy
   has_many :comments, through: :posts
+  has_many :post_up_votes, through: :posts
 
   validates :credibility, presence: true
 end
