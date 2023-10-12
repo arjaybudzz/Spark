@@ -8,7 +8,7 @@ RSpec.describe ComputeReaction do
   describe 'user upvotes a post' do
     before do
       create_list(:post_up_vote, 10, post_id: @post.id)
-      ComputeReaction.compute_upvote(@post)
+      ComputeReaction.compute_upvote(@post, PostUpVote.count)
     end
 
     it { expect(@post.upvote).to eq(10) }
@@ -19,7 +19,7 @@ RSpec.describe ComputeReaction do
 
     before do
       sample_upvote.destroy
-      ComputeReaction.compute_upvote(@post)
+      ComputeReaction.compute_upvote(@post, PostUpVote.count)
     end
 
     it { expect(@post.upvote).to eq(0) }
@@ -29,7 +29,7 @@ RSpec.describe ComputeReaction do
 
     before do
       create_list(:post_down_vote, 10, post_id: @post.id)
-      ComputeReaction.compute_downvote(@post)
+      ComputeReaction.compute_downvote(@post, PostDownVote.count)
     end
 
     it { expect(@post.downvote).to eq(10) }
@@ -40,7 +40,7 @@ RSpec.describe ComputeReaction do
 
     before do
       sample_downvote.destroy
-      ComputeReaction.compute_downvote(@post)
+      ComputeReaction.compute_downvote(@post, PostDownVote.count)
     end
 
     it { expect(@post.downvote).to eq(0) }

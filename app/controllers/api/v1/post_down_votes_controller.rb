@@ -22,6 +22,6 @@ class Api::V1::PostDownVotesController < ApplicationController
   end
 
   def evaluate_downvote
-    ComputeReaction.compute_downvote(current_post)
+    ComputeReaction.compute_downvote(current_post, PostDownVote.count)
   end
 end

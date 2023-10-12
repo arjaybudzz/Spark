@@ -21,6 +21,6 @@ class Api::V1::PostUpVotesController < ApplicationController
   end
 
   def update_post_upvote
-    ComputeReaction.compute_upvote(current_post)
+    ComputeReaction.compute_upvote(current_post, PostUpVote.count)
   end
 end

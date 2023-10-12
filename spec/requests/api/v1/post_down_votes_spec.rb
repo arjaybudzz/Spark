@@ -13,7 +13,7 @@ RSpec.describe "Api::V1::PostDownVotes", type: :request do
           as: :json
       end
 
-      it { expect(ComputeReaction.compute_downvote(@post)).to eq(true) }
+      it { expect(ComputeReaction.compute_downvote(@post, PostDownVote.count)).to eq(true) }
       it { expect(response).to have_http_status(:created) }
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe "Api::V1::PostDownVotes", type: :request do
           as: :json
       end
 
-      it { expect(ComputeReaction.compute_downvote(@post)).to eq(true) }
+      it { expect(ComputeReaction.compute_downvote(@post, PostDownVote.count)).to eq(true) }
       it { expect(response).to have_http_status(:no_content) }
     end
   end

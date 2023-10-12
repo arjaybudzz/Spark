@@ -14,7 +14,7 @@ RSpec.describe "Api::V1::PostUpVotes", type: :request do
           as: :json
       end
 
-      it { expect(ComputeReaction.compute_upvote(@post)).to eq(true) }
+      it { expect(ComputeReaction.compute_upvote(@post, PostUpVote.count)).to eq(true) }
       it { expect(@post.upvote).to eq(1) }
       it { expect(response).to have_http_status(:created) }
     end
@@ -28,6 +28,7 @@ RSpec.describe "Api::V1::PostUpVotes", type: :request do
           as: :json
       end
 
+      it { expect(ComputeReaction.compute_upvote(@post, PostUpVote.count)).to eq(true) }
       it { expect(response).to have_http_status(:no_content) }
     end
   end

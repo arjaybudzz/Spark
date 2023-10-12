@@ -1,9 +1,9 @@
 class ComputeReaction
-  def self.compute_upvote(post)
-    post.update(upvote: PostUpVote.count)
+  def self.compute_upvote(post, react_number)
+    post.update(upvote: react_number)
   end
 
-  def self.compute_downvote(post)
-    post.update(downvote: PostDownVote.count)
+  def self.compute_downvote(post, react_number)
+    post.update(downvote: react_number)
   end
 end
