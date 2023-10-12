@@ -4,6 +4,7 @@ RSpec.describe Comment, type: :model do
   describe 'associations test' do
     it { should belong_to(:post) }
     it { should have_many(:replies).dependent(:destroy) }
+    it { should have_many(:comment_up_votes).dependent(:destroy) }
   end
 
   describe 'user name validation' do
