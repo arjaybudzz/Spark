@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :replies, only: %i[index show create update destroy]
       resources :subject_coverages, only: %i[index show create]
       resources :post_up_votes, only: %i[create destroy]
+      resources :post_down_votes, only: %i[create destroy]
 
       resources :tokens, only: %i[create]
       resources :subject_tokens, only: %i[create]
