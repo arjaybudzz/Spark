@@ -5,6 +5,7 @@ RSpec.describe Post, type: :model do
     it { should belong_to(:user) }
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:post_up_votes).dependent(:destroy) }
+    it { should have_many(:post_down_votes).dependent(:destroy) }
   end
 
   describe 'body associations' do
