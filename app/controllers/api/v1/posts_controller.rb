@@ -9,7 +9,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def show
-    options = { include: %i[user comments] }
+    options = { include: %i[user comments post_up_votes] }
     render json: PostSerializer.new(@post, options).serializable_hash
   end
 

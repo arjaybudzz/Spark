@@ -5,7 +5,7 @@ class Api::V1::PostUpVotesController < ApplicationController
   def create
     @upvote = current_post.post_up_votes.build
     if @upvote.save
-      render json: @upvote, status: :created
+      render json: PostUpVoteSerializer.new(@upvote).serializable_hash, status: :created
     else
       render json: @upvote.errors, status: :unprocessable_entity
     end
