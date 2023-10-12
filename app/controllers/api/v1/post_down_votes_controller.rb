@@ -7,7 +7,7 @@ class Api::V1::PostDownVotesController < ApplicationController
   def create
     @post_down_vote = current_post.post_down_votes.build
 
-    render json: @post_down_vote, status: :created if @post_down_vote.save
+    render json: PostDownVoteSerializer.new(@post_down_vote).serializable_hash, status: :created if @post_down_vote.save
   end
 
   def destroy

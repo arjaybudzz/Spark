@@ -6,4 +6,6 @@ class UserSerializer
   has_many :answer_sheets
   has_many :posts
   has_many :comments, through: :posts
+  has_many :post_up_votes, through: :posts
+  has_many :post_down_votes, through: :posts
 end
