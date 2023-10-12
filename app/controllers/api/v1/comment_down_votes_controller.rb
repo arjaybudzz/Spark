@@ -7,7 +7,7 @@ class Api::V1::CommentDownVotesController < ApplicationController
   def create
     @comment_downvote = current_comment.comment_down_votes.build
 
-    render json: @comment_downvote, status: :created if @comment_downvote.save
+    render json: CommentDownVoteSerializer.new(@comment_downvote).serializable_hash, status: :created if @comment_downvote.save
   end
 
   def destroy
