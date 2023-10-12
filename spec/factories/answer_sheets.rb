@@ -27,21 +27,21 @@ FactoryBot.define do
 
     factory :answer_sheet_with_correct_answers do
       transient do
-        quiz_item_count { 10 }
+        quiz_answer_count { 10 }
       end
       after(:create) do |answer_sheet, evaluator|
-        create_list(:quiz_answer, evaluator.quiz_item_count, answer_sheet: answer_sheet)
+        create_list(:quiz_answer, evaluator.quiz_answer_count, answer_sheet: answer_sheet)
         answer_sheet.reload
       end
     end
 
     factory :answer_sheet_with_wrong_answers do
       transient do
-        quiz_item_count { 10 }
+        quiz_answer_count { 10 }
       end
 
       after(:create) do |answer_sheet, evaluator|
-        create_list(:wrong_answer, evaluator.quiz_item_count, answer_sheet: answer_sheet)
+        create_list(:wrong_answer, evaluator.quiz_answer_count, answer_sheet: answer_sheet)
 
         answer_sheet.reload
       end
