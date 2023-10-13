@@ -10,4 +10,5 @@ class ApplicationController < ActionController::API
   include CommentAuthentication
   include SubjectCoverageAuthentication
   include Paginable
+  include ReplyAuthentication
 end
