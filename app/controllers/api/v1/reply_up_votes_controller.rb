@@ -7,7 +7,7 @@ class Api::V1::ReplyUpVotesController < ApplicationController
   def create
     @reply_upvote = current_reply.reply_up_votes.build
 
-    render json: @reply_upvote, status: :created if @reply_upvote.save
+    render json: ReplyUpVoteSerializer.new(@reply_upvote).serializable_hash, status: :created if @reply_upvote.save
   end
 
   def destroy

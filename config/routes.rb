@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :comment_up_votes, only: %i[create destroy]
       resources :comment_down_votes, only: %i[create destroy]
       resources :reply_up_votes, only: %i[create destroy]
+      resources :reply_down_votes, only: %i[create destroy]
 
       resources :tokens, only: %i[create]
       resources :subject_tokens, only: %i[create]
