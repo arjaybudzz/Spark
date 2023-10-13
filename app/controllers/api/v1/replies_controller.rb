@@ -11,7 +11,7 @@ class Api::V1::RepliesController < ApplicationController
   end
 
   def show
-    options = { include: %i[comment reply_up_votes] }
+    options = { include: %i[comment reply_up_votes reply_down_votes] }
     render json: ReplySerializer.new(@reply, options).serializable_hash
   end
 
