@@ -56,6 +56,42 @@ FactoryBot.define do
       end
     end
 
+    factory :first_user do
+      first_name { 'John' }
+      middle_name { 'Middle' }
+      last_name { 'Doe' }
+      email { 'johndoe@gmail.com' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
+    factory :second_user do
+      first_name { 'Jane' }
+      middle_name { 'Jennings' }
+      last_name { 'Rutherford' }
+      email { 'janerutherford@gmail.com' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
+    factory :third_user do
+      first_name { 'Rayver' }
+      middle_name { 'Cruz' }
+      last_name { 'Bradford' }
+      email { 'rayver@gmail.com' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
+    factory :fourth_user do
+      first_name { 'Rayver' }
+      middle_name { 'Cruz' }
+      last_name { 'Marasigan' }
+      email { 'rayvermarasigan@gmail.com' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
     factory :empty_user_email, traits: [:invalid]
   end
 end

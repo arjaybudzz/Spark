@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :post_down_votes, through: :posts
 
   validates :credibility, presence: true
+
+  scope :filter_by_first_name, lambda { |keyword| where("lower(first_name) LIKE ?", "%#{keyword.downcase}%") }
 end
