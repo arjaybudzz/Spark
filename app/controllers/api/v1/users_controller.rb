@@ -1,7 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :setup_user, only: %i[show update destroy]
-  before_action :check_login, only: %i[create]
-  before_action :check_owner, only: %i[update destroy]
+  before_action :check_user_login, only: %i[update destroy]
   before_action :compute_credibility, only: %i[show]
 
   after_action :send_confirmation_email, only: %i[create]
@@ -13,12 +12,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    options = { include: %i[admin answer_sheets posts comments] }
+    options = { include: %i[answer_sheets posts comments] }
     render json: UserSerializer.new(@user, options).serializable_hash
   end
 
   def create
-    @user = current_admin.users.build(permitted_user_params)
+    @user = User.new(permitted_user_params)
 
     if @user.save
       render json: UserSerializer.new(@user).serializable_hash, status: :created
@@ -48,10 +47,6 @@ class Api::V1::UsersController < ApplicationController
 
   def permitted_user_params
     params.require(:user).permit(:first_name, :middle_name, :last_name, :email, :credibility, :password, :password_confirmation)
-  end
-
-  def check_owner
-    head :forbidden unless @user.admin_id == current_admin&.id
   end
 
   def send_confirmation_email

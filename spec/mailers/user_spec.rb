@@ -5,6 +5,7 @@ RSpec.describe UserMailer, type: :mailer do
   setup do
     @mail_to_user = UserMailer.received_confirmation
     @user_sample = create(:user)
+    @admin = create(:admin)
   end
 
   describe "received_confirmation" do
@@ -13,7 +14,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("Thank you for signing up!")
       expect(mail.to).to eq([@user_sample.email])
-      expect(mail.from).to eq([@user_sample.admin.email])
+      expect(mail.from).to eq([ENV['GMAIL_USERNAME']])
     end
 
     it "renders the body" do

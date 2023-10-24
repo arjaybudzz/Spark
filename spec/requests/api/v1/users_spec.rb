@@ -24,22 +24,13 @@ RSpec.describe 'Api::V1::Users', type: :request do
 
     it { expect(json[:data][:attributes][:email]).to match(@user.email) }
     it { expect(response).to have_http_status(:success) }
-
-    it 'expect to match its associated admin' do
-      expect(json[:data][:relationships][:admin][:data][:id]).to match(@user.admin.id.to_s)
-    end
-
-    # it 'expect to match its associated posts' do
-    #   expect(json[:data][:relationships][:posts][:data][0][:id]).to match(@user.posts.first.id.to_s)
-    # end
   end
 
   describe 'POST /create' do
-    context 'create a user if info is valid and it belongs to admin' do
+    context 'create a user if info is valid' do
       before do
         post api_v1_users_url,
           params: { user: @user_valid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @user.admin_id) },
           as: :json
       end
 
@@ -50,21 +41,10 @@ RSpec.describe 'Api::V1::Users', type: :request do
       before do
         post api_v1_users_url,
           params: { user: @user_invalid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @user.admin_id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
-    end
-
-    context 'forbid to create a user if there is no admin' do
-      before do
-        post api_v1_users_url,
-          params: { user: @user_valid_attribute },
-          as: :json
-      end
-
-      it { expect(response).to have_http_status(:forbidden) }
     end
   end
 
@@ -73,7 +53,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
       before do
         put api_v1_user_url(@user),
           params: { user: @user_valid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @user.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
           as: :json
       end
 
@@ -84,7 +64,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
       before do
         put api_v1_user_url(@user),
           params: { user: @user_invalid_attribute },
-          headers: { Authorization: JsonWebToken.encode(admin_id: @user.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
           as: :json
       end
 
@@ -106,7 +86,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     context 'destroy user if authorized' do
       before do
         delete api_v1_user_url(@user),
-          headers: { Authorization: JsonWebToken.encode(admin_id: @user.admin_id) },
+          headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
           as: :json
       end
 

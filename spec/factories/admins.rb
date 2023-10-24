@@ -32,17 +32,6 @@ FactoryBot.define do
       end
     end
 
-    factory :admin_with_users do
-      transient do
-        users_count { 10 }
-      end
-
-      after(:create) do |admin, evaluator|
-        create_list(:user, evaluator.users_count, admin: admin)
-        admin.reload
-      end
-    end
-
     trait :valid do
       email { 'johndoe@gmail.com' }
       password { 'password' }

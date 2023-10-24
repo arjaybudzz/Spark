@@ -5,7 +5,6 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.unique.email(domain: 'gmail.com') }
     credibility { 19.2 }
-    admin { association :admin }
     password { 'password' }
     password_confirmation { 'password' }
 
@@ -19,7 +18,6 @@ FactoryBot.define do
       last_name { 'Doe' }
       email { 'johndoe@gmail.com' }
       credibility { 19.2 }
-      admin { association :admin }
       password { 'password' }
       password_confirmation { 'password' }
     end
