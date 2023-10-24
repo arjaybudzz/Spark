@@ -4,7 +4,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :check_user_owner, only: %i[destroy]
 
   def index
-    @post = Post.all
+    @post = Post.all.reverse
     render json: PostSerializer.new(@post).serializable_hash
   end
 

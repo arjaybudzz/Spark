@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
   wrap_parameters include: %i[first_name middle_name last_name email password password_confirmation]
 
   def index
-    @user = User.all
+    @user = User.search(params)
     render json: UserSerializer.new(@user).serializable_hash
   end
 
