@@ -16,6 +16,7 @@ RSpec.describe 'Api::V1::PostTokens', type: :request do
 
       it { expect(json[:post_token].nil?).to eq(false) }
       it { expect(response).to have_http_status(:success) }
+      it { expect(@post.auth_token).to eq(json[:post_token]) }
     end
 
     context 'do not generate token if input is invalid' do

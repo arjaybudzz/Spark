@@ -1,4 +1,6 @@
 class Api::V1::PostTokensController < ApplicationController
+  after_action :enter_post_token, only: %i[create]
+
   def create
     @post = Post.find_by_body(permitted_post_params[:body])
 
@@ -18,5 +20,9 @@ class Api::V1::PostTokensController < ApplicationController
 
   def permitted_post_params
     params.require(:post).permit(:body)
+  end
+
+  def enter_post_token
+    @post.update(auth_token: JsonWebToken.encode(post_id: @post.id))
   end
 end

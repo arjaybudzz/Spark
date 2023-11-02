@@ -3,6 +3,7 @@ FactoryBot.define do
     body { "MyText" }
     upvote { 1 }
     downvote { 0 }
+    auth_token { "anything" }
     user { association :user }
 
     trait :invalid do
@@ -20,12 +21,14 @@ FactoryBot.define do
     factory :upvote_and_downvote do
       upvote { 1 }
       downvote { 0 }
+      auth_token { "anything" }
     end
 
     factory :downvote_post do
       body { "some post" }
       upvote { 0 }
       downvote { 1 }
+      auth_token { "anything" }
     end
 
     factory :empty_post, traits: [:invalid]
